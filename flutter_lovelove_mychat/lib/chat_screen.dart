@@ -23,9 +23,12 @@ class ChatScreen extends StatelessWidget {
         children: [
           // 배경 이미지 추가
           Positioned.fill(
-            child: Image.asset(
-              "assets/images/somi_background.png",
-              fit: BoxFit.cover,
+            child: Opacity(
+              opacity: 0.8, // 투명도 설정 (0.0 = 완전 투명, 1.0 = 완전 불투명)
+              child: Image.asset(
+                "assets/images/somi_background.png",
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           // 내용물 추가
@@ -84,7 +87,7 @@ class _BottomInputField extends StatelessWidget {
         constraints: const BoxConstraints(minHeight: 48),
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.7), // 배경색 투명도 조절
+          color: Colors.white.withOpacity(0.8), // 배경색 투명도 조절
           border: const Border(
             top: BorderSide(
               color: Color(0xFFE5E5EA),
