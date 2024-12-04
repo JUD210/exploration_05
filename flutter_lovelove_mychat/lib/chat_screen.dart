@@ -1,75 +1,91 @@
-import 'package:flutter_lovelove_mychat/chat.dart';
-import 'package:flutter_lovelove_mychat/chat_controller.dart';
-import 'package:flutter_lovelove_mychat/bubble.dart';
+// chat_screen.dart
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_lovelove_mychat/chat_controller.dart';
+import 'package:flutter_lovelove_mychat/chat.dart';
+import 'package:flutter_lovelove_mychat/bubble.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+  const ChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final chatController = context.read<ChatController>();
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: const Text("Ximya"),
-        backgroundColor: const Color(0xFF007AFF),
+        title: const Text("소미와의 채팅 💖"),
+        backgroundColor: const Color(0xFFFFC5D3),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                context.read<ChatController>().focusNode.unfocus();
-                // FocusScope.of(context).unfocus();
-              },
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Selector<ChatController, List<Chat>>(
-                  selector: (context, controller) =>
-                      controller.chatList.reversed.toList(),
-                  builder: (context, chatList, child) {
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      reverse: true,
-                      padding: const EdgeInsets.only(top: 12, bottom: 20) +
-                          const EdgeInsets.symmetric(horizontal: 12),
-                      separatorBuilder: (_, __) => const SizedBox(
-                        height: 12,
-                      ),
-                      controller:
-                          context.read<ChatController>().scrollController,
-                      itemCount: chatList.length,
-                      itemBuilder: (context, index) {
-                        return Bubble(chat: chatList[index]);
-                      },
-                    );
-                  },
-                ),
-              ),
+          // 배경 이미지 추가
+          Positioned.fill(
+            child: Image.asset(
+              "assets/images/somi_background.png",
+              fit: BoxFit.cover,
             ),
           ),
-          const _BottomInputField(),
+          // 내용물 추가
+          Column(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    chatController.focusNode.unfocus();
+                  },
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Selector<ChatController, List<Chat>>(
+                      selector: (context, controller) =>
+                          controller.chatList.reversed.toList(),
+                      builder: (context, chatList, child) {
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          reverse: true,
+                          padding: const EdgeInsets.only(top: 12, bottom: 20) +
+                              const EdgeInsets.symmetric(horizontal: 12),
+                          separatorBuilder: (_, __) => const SizedBox(
+                            height: 12,
+                          ),
+                          controller: chatController.scrollController,
+                          itemCount: chatList.length,
+                          itemBuilder: (context, index) {
+                            return Bubble(chat: chatList[index]);
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              const _BottomInputField(),
+            ],
+          ),
         ],
       ),
     );
   }
 }
 
-/// Bottom Fixed Filed
+/// Bottom Fixed Field
 class _BottomInputField extends StatelessWidget {
-  const _BottomInputField({Key? key}) : super(key: key);
+  const _BottomInputField({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final chatController = context.read<ChatController>();
+
     return SafeArea(
       bottom: true,
       child: Container(
         constraints: const BoxConstraints(minHeight: 48),
         width: double.infinity,
-        decoration: const BoxDecoration(
-          border: Border(
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.7), // 배경색 투명도 조절
+          border: const Border(
             top: BorderSide(
               color: Color(0xFFE5E5EA),
             ),
@@ -78,9 +94,9 @@ class _BottomInputField extends StatelessWidget {
         child: Stack(
           children: [
             TextField(
-              focusNode: context.read<ChatController>().focusNode,
-              onChanged: context.read<ChatController>().onFieldChanged,
-              controller: context.read<ChatController>().textEditingController,
+              focusNode: chatController.focusNode,
+              onChanged: chatController.onFieldChanged,
+              controller: chatController.textEditingController,
               maxLines: null,
               textAlignVertical: TextAlignVertical.top,
               decoration: InputDecoration(
@@ -90,7 +106,7 @@ class _BottomInputField extends StatelessWidget {
                   left: 16,
                   top: 18,
                 ),
-                hintText: 'message',
+                hintText: '메시지를 입력하세요...',
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(8.0),
@@ -101,7 +117,7 @@ class _BottomInputField extends StatelessWidget {
                 ),
               ),
             ),
-            // custom suffix btn
+            // 전송 버튼
             Positioned(
               bottom: 0,
               right: 0,
@@ -116,7 +132,9 @@ class _BottomInputField extends StatelessWidget {
                     BlendMode.srcIn,
                   ),
                 ),
-                onPressed: context.read<ChatController>().onFieldSubmitted,
+                onPressed: chatController.isTextFieldEnable
+                    ? chatController.onFieldSubmitted
+                    : null,
               ),
             ),
           ],

@@ -1,5 +1,3 @@
-library flutter_chat_bubble;
-
 import 'package:flutter_lovelove_mychat/chat.dart';
 import 'package:flutter_lovelove_mychat/chat_message_type.dart';
 import 'package:flutter_lovelove_mychat/formatter.dart';
@@ -25,7 +23,8 @@ class Bubble extends StatelessWidget {
       children: [
         if (chat.type == ChatMessageType.received)
           const CircleAvatar(
-            backgroundImage: AssetImage("assets/images/avatar_1.png"),
+            backgroundImage:
+                AssetImage("assets/images/somi_profile_image_circle.png"),
           ),
         Container(
           margin: margin ?? EdgeInsets.zero,
@@ -36,7 +35,7 @@ class Bubble extends StatelessWidget {
             shadowColor: Colors.grey.shade200,
             child: Container(
               constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.8,
+                maxWidth: MediaQuery.of(context).size.width * 0.7,
               ),
               padding: paddingOnType,
               child: Column(
@@ -52,7 +51,7 @@ class Bubble extends StatelessWidget {
                   Text(
                     Formatter.formatDateTime(chat.time),
                     style: TextStyle(color: textColorOnType, fontSize: 12),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -62,33 +61,17 @@ class Bubble extends StatelessWidget {
     );
   }
 
-  Color get textColorOnType {
+  // Getter for alignment based on message type
+  MainAxisAlignment get alignmentOnType {
     switch (chat.type) {
       case ChatMessageType.sent:
-        return Colors.white;
+        return MainAxisAlignment.end;
       case ChatMessageType.received:
-        return const Color(0xFF0F0F0F);
+        return MainAxisAlignment.start;
     }
   }
 
-  Color get bgColorOnType {
-    switch (chat.type) {
-      case ChatMessageType.received:
-        return const Color(0xFFE7E7ED);
-      case ChatMessageType.sent:
-        return const Color(0xFF007AFF);
-    }
-  }
-
-  CustomClipper<Path> get clipperOnType {
-    switch (chat.type) {
-      case ChatMessageType.sent:
-        return ChatBubbleClipper1(type: BubbleType.sendBubble);
-      case ChatMessageType.received:
-        return ChatBubbleClipper1(type: BubbleType.receiverBubble);
-    }
-  }
-
+  // Getter for cross-axis alignment based on message type
   CrossAxisAlignment get crossAlignmentOnType {
     switch (chat.type) {
       case ChatMessageType.sent:
@@ -98,20 +81,16 @@ class Bubble extends StatelessWidget {
     }
   }
 
-  MainAxisAlignment get alignmentOnType {
-    switch (chat.type) {
-      case ChatMessageType.received:
-        return MainAxisAlignment.start;
-
-      case ChatMessageType.sent:
-        return MainAxisAlignment.end;
-    }
-  }
-
+  // Getter for padding based on message type
   EdgeInsets get paddingOnType {
     switch (chat.type) {
       case ChatMessageType.sent:
-        return const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 24);
+        return const EdgeInsets.only(
+          top: 10,
+          bottom: 10,
+          left: 10,
+          right: 24,
+        );
       case ChatMessageType.received:
         return const EdgeInsets.only(
           top: 10,
@@ -119,6 +98,36 @@ class Bubble extends StatelessWidget {
           left: 24,
           right: 10,
         );
+    }
+  }
+
+  // Getter for background color based on message type
+  Color get bgColorOnType {
+    switch (chat.type) {
+      case ChatMessageType.sent:
+        return const Color(0xFF007AFF);
+      case ChatMessageType.received:
+        return const Color(0xFFFFC5D3);
+    }
+  }
+
+  // Getter for text color based on message type
+  Color get textColorOnType {
+    switch (chat.type) {
+      case ChatMessageType.sent:
+        return Colors.white;
+      case ChatMessageType.received:
+        return const Color(0xFF0F0F0F);
+    }
+  }
+
+  // Getter for clipper based on message type
+  CustomClipper<Path> get clipperOnType {
+    switch (chat.type) {
+      case ChatMessageType.sent:
+        return ChatBubbleClipper1(type: BubbleType.sendBubble);
+      case ChatMessageType.received:
+        return ChatBubbleClipper1(type: BubbleType.receiverBubble);
     }
   }
 }
