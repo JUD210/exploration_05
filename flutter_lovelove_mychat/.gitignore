@@ -1,15 +1,3 @@
-# Custom
-_*
-webapp_flutter_labalaba
-
-# Deep Learning models
-*.h5
-*.keras
-
-##################################################
-# Import gitignore patterns from Flutter project
-##################################################
-
 # Miscellaneous
 *.class
 *.log
@@ -53,24 +41,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-########################################
-# Mac OS finder
-.DS_Store
-
-# vscode configurations
-.vscode
-.history
-
-# vim swap file
-.*.swp
-.*.swo
-
-# gcc/g++ output files
-*.out
-*.o
-*.exe
-
-# java output files
-*.class
-/build/
