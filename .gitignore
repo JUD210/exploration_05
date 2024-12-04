@@ -1,6 +1,7 @@
 # Custom
 _*
 webapp_flutter_labalaba
+.env
 
 # Deep Learning models
 *.h5
