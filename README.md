@@ -5,6 +5,21 @@
 - 참고하면 좋은 사이트 (LMS 작성자의 원본 ebook)
   - <https://wikidocs.net/31379>
 
+- 플러터 채팅 앱 원본
+  - <https://github.com/Xim-ya/basic_chat_ui_Implementation>
+
+- 소미 이미지 생성 프롬프트
+
+```plaintext
+prompt
+1girl, long black hair, blue eyes, wearing plain white shirt, denim shorts, cute, beautiful, city, absurdres, high res, ultrasharp, 8K, masterpiece, looking at viewer
+
+negative label
+verybadimagenegative_v1.3, ng_deepnegative_v1_75t, (ugly face:0.8),cross-eyed,sketches, (worst quality:2), (low quality:2), (normal quality:2), lowres, normal quality, ((monochrome)), ((grayscale)), skin spots, acnes, skin blemishes, bad an
+
+bad anatomy, DeepNegative, facing away, tilted head, {Multiple people}, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, worstquality, low quality, normal quality, jpegartifacts, signature, watermark, usern
+```
+
 ## 문제 및 해결
 
 종결 코드: chatbotshit.ipynb (by 오근킹)
